@@ -16,7 +16,7 @@
 #include <lwip/tcpip.h>
 #include <lwip/timeouts.h>
 #include <netif/etharp.h>
-#include <pktdrv.h>
+#include <nvnetdrv.h>
 #include <xboxkrnl/xboxkrnl.h>
 
 #include <hal/debug.h>
@@ -27,7 +27,8 @@
 #define PKT_TMR_INTERVAL 5 /* ms */
 #define DEBUGGING        0
 
-struct netif nforce_netif, *g_pnetif;
+extern struct netif *g_pnetif;
+static struct netif nforce_netif;
 
 err_t nforceif_init(struct netif *netif);
 static void packet_timer(void *arg);
@@ -41,7 +42,8 @@ static void tcpip_init_done(void *arg)
 static void packet_timer(void *arg)
 {
     LWIP_UNUSED_ARG(arg);
-    Pktdrv_ReceivePackets();
+    // TODO: This was `Pktdrv_ReceivePackets();`, not sure if this is a correct replacement or not
+    nvnetdrv_start_txrx();
     sys_timeout(PKT_TMR_INTERVAL, packet_timer, NULL);
 }
 
@@ -65,9 +67,9 @@ int WSAStartup(
   WORD      wVersionRequired,
   LPWSADATA lpWSAData
 ) {
-  assert(wVersionRequired == MAKEDWORD(1,1));
+  assert(wVersionRequired == MAKEDWORD(2,0));
   lpWSAData->wVersion = wVersionRequired;
-  lpWSAData->wHighVersion = MAKEDWORD(1,1);
+  lpWSAData->wHighVersion = MAKEDWORD(2,0);
 
 
 

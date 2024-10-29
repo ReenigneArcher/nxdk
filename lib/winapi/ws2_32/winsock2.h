@@ -3,7 +3,7 @@ typedef unsigned long u_long;
 
 // We do not support this
 #define gethostbyaddr(...) NULL
-#define WSACleanup(...) Pktdrv_Quit()
+#define WSACleanup(...) nvnetdrv_stop()
 
 #define SOMAXCONN 128
 

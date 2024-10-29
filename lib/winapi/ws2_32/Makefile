@@ -5,8 +5,8 @@ WS2_32_SRCS := \
 
 WS2_32_OBJS = $(addsuffix .obj, $(basename $(WS2_32_SRCS)))
 
-NXDK_CFLAGS += -I$(NXDK_DIR)/lib/winapi/ws2_32 -I$(NXDK_DIR)/lib/net/pktdrv
-NXDK_CXXFLAGS += -I$(NXDK_DIR)/lib/winapi/ws2_32 -I$(NXDK_DIR)/lib/net/pktdrv
+NXDK_CFLAGS += -I$(NXDK_DIR)/lib/winapi/ws2_32
+NXDK_CXXFLAGS += -I$(NXDK_DIR)/lib/winapi/ws2_32
 
 $(NXDK_DIR)/lib/ws2_32.lib: $(WS2_32_OBJS)
 
