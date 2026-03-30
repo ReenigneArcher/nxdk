@@ -56,6 +56,32 @@ SIZE_T VirtualQuery (LPCVOID lpAddress, PMEMORY_BASIC_INFORMATION lpBuffer, SIZE
     return sizeof(MEMORY_BASIC_INFORMATION);
 }
 
+BOOL VirtualProtect (LPVOID lpAddress, SIZE_T dwSize, DWORD flNewProtect, PDWORD lpflOldProtect)
+{
+  (void)lpAddress;
+  (void)dwSize;
+
+  if (lpflOldProtect != NULL) {
+    *lpflOldProtect = PAGE_READWRITE;
+  }
+
+  if (flNewProtect != PAGE_NOACCESS && flNewProtect != PAGE_READWRITE) {
+    SetLastError(ERROR_INVALID_PARAMETER);
+    return FALSE;
+  }
+
+  SetLastError(ERROR_SUCCESS);
+  return TRUE;
+}
+
+BOOL VirtualLock (LPVOID lpAddress, SIZE_T dwSize)
+{
+  (void)lpAddress;
+  (void)dwSize;
+  SetLastError(ERROR_SUCCESS);
+  return TRUE;
+}
+
 VOID WINAPI ZeroMemory (PVOID Destination, SIZE_T length)
 {
     RtlZeroMemory(Destination, length);

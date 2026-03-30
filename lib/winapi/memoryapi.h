@@ -15,6 +15,8 @@ extern "C" {
 LPVOID VirtualAlloc (LPVOID lpAddress, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect);
 BOOL VirtualFree (LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
 SIZE_T VirtualQuery (LPCVOID lpAddress, PMEMORY_BASIC_INFORMATION lpBuffer, SIZE_T dwLength);
+BOOL VirtualProtect (LPVOID lpAddress, SIZE_T dwSize, DWORD flNewProtect, PDWORD lpflOldProtect);
+BOOL VirtualLock (LPVOID lpAddress, SIZE_T dwSize);
 
 #ifdef __cplusplus
 }

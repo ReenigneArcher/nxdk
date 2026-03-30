@@ -1,4 +1,5 @@
 include $(NXDK_DIR)/lib/winapi/winmm/Makefile
+include $(NXDK_DIR)/lib/winapi/ws2_32/Makefile
 
 WINAPI_SRCS := \
 	$(NXDK_DIR)/lib/winapi/badptr.c \
@@ -13,6 +14,7 @@ WINAPI_SRCS := \
 	$(NXDK_DIR)/lib/winapi/ioapi.c \
 	$(NXDK_DIR)/lib/winapi/memory.c \
 	$(NXDK_DIR)/lib/winapi/libloaderapi.c \
+	$(NXDK_DIR)/lib/winapi/posix_time.c \
 	$(NXDK_DIR)/lib/winapi/profiling.c \
 	$(NXDK_DIR)/lib/winapi/shlobj_core.c \
 	$(NXDK_DIR)/lib/winapi/sync.c \

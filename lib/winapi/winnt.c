@@ -22,6 +22,41 @@ LONG64 InterlockedExchange64 (LONG64 volatile *Target, LONG64 Value)
     return old_target_value.QuadPart;
 }
 
+LONG64 InterlockedOr64 (LONG64 volatile *Target, LONG64 Value)
+{
+    LARGE_INTEGER old_target_value, new_value;
+    unsigned char exchanged;
+
+    old_target_value.QuadPart = *Target;
+
+    for (;;) {
+        new_value.QuadPart = old_target_value.QuadPart | Value;
+
+        __asm__ __volatile__("lock cmpxchg8b (%3)\n"
+                             "setz %0\n"
+                             : "=q"(exchanged), "+a"(old_target_value.LowPart), "+d"(old_target_value.HighPart)
+                             : "r"(Target), "b"(new_value.LowPart), "c"(new_value.HighPart)
+                             : "memory");
+
+        if (exchanged) {
+            return old_target_value.QuadPart;
+        }
+    }
+}
+
+LONG InterlockedOr (LONG volatile *Target, LONG Value)
+{
+    LONG old_value;
+    LONG new_value;
+
+    do {
+        old_value = *Target;
+        new_value = old_value | Value;
+    } while (InterlockedCompareExchange((PLONG)Target, new_value, old_value) != old_value);
+
+    return old_value;
+}
+
 PVOID InterlockedExchangePointer (PVOID volatile *Target, PVOID Value)
 {
     return (PVOID)InterlockedExchange((PLONG)Target, (LONG)Value);

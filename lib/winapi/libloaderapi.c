@@ -28,6 +28,17 @@ HMODULE LoadLibraryA (LPCSTR lpLibFileName)
     return LoadLibraryExA(lpLibFileName, NULL, 0);
 }
 
+HMODULE GetModuleHandleA (LPCSTR lpModuleName)
+{
+    if (lpModuleName == NULL || strcmp(lpModuleName, "kernel32.dll") == 0) {
+        SetLastError(ERROR_SUCCESS);
+        return NULL;
+    }
+
+    SetLastError(ERROR_MOD_NOT_FOUND);
+    return NULL;
+}
+
 BOOL FreeLibrary (HMODULE hLibModule)
 {
     assert(hLibModule != NULL);
