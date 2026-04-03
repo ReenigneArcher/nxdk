@@ -52,6 +52,11 @@ BOOL InitOnceComplete (LPINIT_ONCE lpInitOnce, DWORD dwFlags, LPVOID lpContext);
 #define WAIT_TIMEOUT       ((DWORD)0x00000102L) // same as STATUS_TIMEOUT
 #define WAIT_FAILED        ((DWORD)0xFFFFFFFFL)
 
+#define CREATE_EVENT_MANUAL_RESET 0x00000001
+#define CREATE_EVENT_INITIAL_SET  0x00000002
+#define EVENT_MODIFY_STATE        0x0002
+#define EVENT_ALL_ACCESS          0x001F0003
+
 VOID Sleep (DWORD dwMilliseconds);
 DWORD SleepEx (DWORD dwMilliseconds, BOOL bAlertable);
 
@@ -63,10 +68,13 @@ DWORD WaitForMultipleObjects (DWORD nCount, const HANDLE *lpHandles, BOOL bWaitA
 HANDLE CreateSemaphore (LPSECURITY_ATTRIBUTES lpSemaphoreAttributes, LONG lInitialCount, LONG lMaximumCount, LPCSTR lpName);
 BOOL ReleaseSemaphore (HANDLE hSemaphore, LONG lReleaseCount, LPLONG lpPreviousCount);
 
+#define CreateSemaphoreA CreateSemaphore
+
 HANDLE CreateMutexA (LPSECURITY_ATTRIBUTES lpMutexAttributes, BOOL bInitialOwner, LPCSTR lpName);
 BOOL ReleaseMutex (HANDLE hMutex);
 
 HANDLE CreateEventA (LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset, BOOL bInitialState, LPCSTR lpName);
+HANDLE CreateEventExA (LPSECURITY_ATTRIBUTES lpEventAttributes, LPCSTR lpName, DWORD dwFlags, DWORD dwDesiredAccess);
 BOOL SetEvent (HANDLE hEvent);
 BOOL ResetEvent (HANDLE hEvent);
 BOOL PulseEvent (HANDLE hEvent);
@@ -74,8 +82,13 @@ BOOL PulseEvent (HANDLE hEvent);
 #ifndef UNICODE
 #define CreateMutex CreateMutexA
 #define CreateEvent CreateEventA
+#define CreateEventEx CreateEventExA
 #else
 #error nxdk does not support the Unicode API
+#endif
+
+#ifndef MemoryBarrier
+#define MemoryBarrier() __sync_synchronize()
 #endif
 
 #ifdef __cplusplus

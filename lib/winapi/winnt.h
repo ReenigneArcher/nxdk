@@ -12,6 +12,7 @@
 typedef LONG HRESULT;
 
 typedef CHAR *LPSTR;
+typedef WCHAR *LPWSTR;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wlanguage-extension-token"
@@ -19,6 +20,8 @@ typedef signed __int64 LONG64, *PLONG64;
 #pragma clang diagnostic pop
 
 LONG64 InterlockedExchange64 (LONG64 volatile *Target, LONG64 Value);
+LONG64 InterlockedOr64 (LONG64 volatile *Target, LONG64 Value);
+LONG InterlockedOr (LONG volatile *Target, LONG Value);
 PVOID InterlockedExchangePointer (PVOID volatile *Target, PVOID Value);
 PVOID InterlockedCompareExchangePointer (PVOID volatile *Destination, PVOID Exchange, PVOID Comperand);
 

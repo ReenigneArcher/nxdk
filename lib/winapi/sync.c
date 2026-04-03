@@ -623,6 +623,13 @@ HANDLE CreateEventA (LPSECURITY_ATTRIBUTES lpEventAttributes, BOOL bManualReset,
     return handle;
 }
 
+HANDLE CreateEventExA (LPSECURITY_ATTRIBUTES lpEventAttributes, LPCSTR lpName, DWORD dwFlags, DWORD dwDesiredAccess)
+{
+    (void)dwDesiredAccess;
+
+    return CreateEventA(lpEventAttributes, (dwFlags & CREATE_EVENT_MANUAL_RESET) != 0, (dwFlags & CREATE_EVENT_INITIAL_SET) != 0, lpName);
+}
+
 BOOL SetEvent (HANDLE hEvent)
 {
     NTSTATUS status;

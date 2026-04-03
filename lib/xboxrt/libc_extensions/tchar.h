@@ -35,11 +35,15 @@ typedef int _TINT;
 typedef signed char _TSCHAR;
 typedef unsigned char _TUCHAR;
 typedef char _TXCHAR;
+typedef char TCHAR;
+typedef char *PTCHAR;
+typedef char *LPTSTR;
 #endif
 
 #define __T(x) x
 #define _T __T
 #define _TEXT __T
+#define TEXT __T
 
 #define _tmain main
 

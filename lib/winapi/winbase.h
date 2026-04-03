@@ -17,6 +17,15 @@ extern "C" {
 
 #define INVALID_HANDLE_VALUE ((HANDLE) - 1)
 
+#define STD_INPUT_HANDLE  ((DWORD)-10)
+#define STD_OUTPUT_HANDLE ((DWORD)-11)
+#define STD_ERROR_HANDLE  ((DWORD)-12)
+
+#define FILE_TYPE_UNKNOWN 0x0000
+#define FILE_TYPE_DISK    0x0001
+#define FILE_TYPE_CHAR    0x0002
+#define FILE_TYPE_PIPE    0x0003
+
 #define INFINITE 0xFFFFFFFF
 
 #define CREATE_SUSPENDED 0x00000004
@@ -157,6 +166,9 @@ VOID WINAPI ZeroMemory (PVOID Destination, SIZE_T length);
 
 DWORD GetLastError (void);
 void SetLastError (DWORD error);
+
+HANDLE GetStdHandle (DWORD nStdHandle);
+DWORD GetFileType (HANDLE hFile);
 
 void WINAPI OutputDebugStringA (LPCTSTR lpOutputString);
 
