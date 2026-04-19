@@ -43,6 +43,9 @@
 #define LWIP_IPV4 1
 #define LWIP_IPV6 1
 #define LWIP_IPV6_DHCP6 1
+#define LWIP_MDNS_RESPONDER 1
+#define LWIP_MDNS_SEARCH 1
+#define LWIP_NUM_NETIF_CLIENT_DATA LWIP_MDNS_RESPONDER
 #define LWIP_DEBUG 1
 #define LWIP_ERRNO_STDINCLUDE 1
 #define LWIP_COMPAT_MUTEX_ALLOWED
@@ -280,7 +283,7 @@
 /**
  * LWIP_IGMP==1: Turn on IGMP module.
  */
-#define LWIP_IGMP                       0
+#define LWIP_IGMP                       1
 
 /*
    ----------------------------------
